@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English Document Wording & Font Validator</title>
+    <link rel="stylesheet" href="style.css?v=3">
+    <!-- Google Fonts for modern premium typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar containing file uploads & preloaded documents -->
+        <aside class="sidebar">
+            <div class="logo-area">
+                <span class="logo-icon">✍️</span>
+                <div class="logo-text">
+                    <h1>Validator</h1>
+                    <span class="subtext">English & Font Quality</span>
+                </div>
+            </div>
+
+            <!-- Upload Area -->
+            <div class="upload-zone" id="dropzone">
+                <input type="file" id="fileInput" accept=".docx" style="display: none;">
+                <div class="upload-icon">📤</div>
+                <h3>Upload Document</h3>
+                <p>Drag & drop or click to browse</p>
+                <span class="file-limits">Supports .docx files</span>
+            </div>
+
+            <!-- Preloaded Files List -->
+            <div class="sidebar-section">
+                <h2>Preloaded Documents</h2>
+                <div class="file-list" id="storedFilesList">
+                    <!-- Dynamic file items -->
+                    <div class="loading-spinner small"></div>
+                </div>
+            </div>
+
+            <!-- Readability Score Card -->
+            <div class="sidebar-section readability-section" id="readabilitySection" style="display: none;">
+                <h2>Passage Readability</h2>
+                <div id="readabilityScores"></div>
+            </div>
+            
+            <div class="sidebar-footer">
+                <p>Antigravity ELA Engine v1.0</p>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Header with document title and summary metrics -->
+            <header class="main-header">
+                <div class="doc-title-container">
+                    <span class="doc-icon">📄</span>
+                    <div>
+                        <h2 id="activeDocName">Select a document to begin</h2>
+                        <p id="activeDocType">No file loaded</p>
+                    </div>
+                </div>
+                
+                <!-- Circular Score Gauge & Actions -->
+                <div class="score-actions-group">
+                    <div class="header-actions" id="headerActions" style="display: none;">
+                        <button class="action-btn correct-btn" id="correctBtn">🛠️ Auto-Correct & Download</button>
+                    </div>
+                    
+                    <div class="score-container" id="scoreContainer" style="display: none;">
+                        <div class="score-radial">
+                            <svg viewBox="0 0 36 36" class="circular-chart">
+                                <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                <path class="circle" id="scoreCircle" stroke-dasharray="0, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                            </svg>
+                            <div class="score-text">
+                                <span id="overallScore">0</span>
+                                <span class="score-lbl">Score</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Statistics Cards Grid -->
+            <section class="stats-grid" id="statsGrid" style="display: none;">
+                <div class="stat-card">
+                    <span class="stat-icon font-color">🅰️</span>
+                    <div class="stat-info">
+                        <h3 id="fontViolationsCount">0</h3>
+                        <p>Font Mismatches</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-icon placeholder-color">🏷️</span>
+                    <div class="stat-info">
+                        <h3 id="placeholdersCount">0</h3>
+                        <p>Placeholders Left</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-icon wording-color">📐</span>
+                    <div class="stat-info">
+                        <h3 id="wordingViolationsCount">0</h3>
+                        <p>Wording / Length</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-icon grammar-color">🔍</span>
+                    <div class="stat-info">
+                        <h3 id="grammarViolationsCount">0</h3>
+                        <p>Grammar / Style</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Main Pane (Tabs & Viewers) -->
+            <section class="content-body" id="contentBody" style="display: none;">
+                <div class="tab-header">
+                    <button class="tab-btn active" data-tab="preview">Interactive Preview</button>
+                    <button class="tab-btn" data-tab="list">Detailed Findings List (<span id="findingsCount">0</span>)</button>
+                </div>
+
+                <div class="tab-panes">
+                    <!-- Tab 1: Interactive Preview -->
+                    <div class="tab-pane active" id="pane-preview">
+                        <div class="legend-bar">
+                            <span class="legend-item"><span class="legend-dot placeholder-bg"></span> Placeholders (Error)</span>
+                            <span class="legend-item"><span class="legend-dot font-bg"></span> Font/Style (Warning)</span>
+                            <span class="legend-item"><span class="legend-dot wording-bg"></span> Wording/Length (Error/Warning)</span>
+                            <span class="legend-item"><span class="legend-dot grammar-bg"></span> Grammar/Punctuation (Warning)</span>
+                        </div>
+                        <div class="doc-viewer-wrapper">
+                            <div class="doc-viewer" id="docViewer">
+                                <!-- Dynamic document layout -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tab 2: Detailed Findings List -->
+                    <div class="tab-pane" id="pane-list">
+                        <div class="findings-filter">
+                            <button class="filter-btn active" data-filter="all">All</button>
+                            <button class="filter-btn" data-filter="error">Errors</button>
+                            <button class="filter-btn" data-filter="warning">Warnings</button>
+                            <button class="filter-btn" data-filter="info">Info</button>
+                        </div>
+                        <div class="findings-list-wrapper" id="findingsList">
+                            <!-- Dynamic list items -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Welcome screen shown before any file is loaded -->
+            <section class="welcome-screen" id="welcomeScreen">
+                <div class="welcome-card">
+                    <div class="welcome-icon">✨</div>
+                    <h2>Check Document Quality Instantly</h2>
+                    <p>Select one of the preloaded ELA exam files on the left, or upload your own `.docx` template or sample paper. The validator checks:</p>
+                    <ul class="features-list">
+                        <li><strong>Font & Layout compliance</strong> (Checking for Arial 10.0pt requirements, style hierarchy warnings)</li>
+                        <li><strong>Unresolved placeholders</strong> (Detects leftover bracket tags like <code>[Insert ID]</code> or <code>##</code> markers)</li>
+                        <li><strong>Wording & constraints checks</strong> (Verify response length requirements like <em>"at least 8 sentences"</em> against rubric exemplar responses)</li>
+                        <li><strong>English grammar & spelling</strong> (Flags smart quotes, double spaces, sentence punctuation, and passage grade level readability indices)</li>
+                    </ul>
+                </div>
+            </section>
+        </main>
+    </div>
+    
+    <script src="app.js?v=3"></script>
+</body>
+</html>
