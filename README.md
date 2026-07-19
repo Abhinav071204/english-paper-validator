@@ -2,7 +2,6 @@
 
 An automated quality assurance (QA) and formatting compliance tool for English Language Arts (ELA) assessment papers (`.docx`). It scans documents for formatting rules, flags unresolved placeholders, standardizes wording guidelines, checks passage readability grade levels, and provides an auto-corrected document download instantly.
 
----
 
 ## 🚀 Key Features
 
@@ -13,7 +12,6 @@ An automated quality assurance (QA) and formatting compliance tool for English L
 * **In-Context Highlights**: Displays interactive layout preview with hover tooltips detailing QA violations.
 * **1-Click Corrector**: Corrects formatting errors and wording mismatches and downloads a clean Word file directly.
 
----
 
 ## 🛠️ Tech Stack
 
@@ -21,7 +19,6 @@ An automated quality assurance (QA) and formatting compliance tool for English L
 * **Frontend Option A**: HTML5, Vanilla CSS3, and JavaScript (with a light HTTP server)
 * **Frontend Option B**: Streamlit (Python-only rapid UI layer)
 
----
 
 ## 📂 Project Structure
 
@@ -34,15 +31,12 @@ An automated quality assurance (QA) and formatting compliance tool for English L
 * `preview.html` - Standalone interactive document preview template with Light/Dark theme.
 * `requirements.txt` - Python project package dependencies.
 
----
 
 ## 💻 How to Run Locally
 
 First, clone the repository and install dependencies:
 ```bash
 pip install -r requirements.txt
-```
-
 ### Option 1: Run the Streamlit Dashboard (Recommended)
 ```bash
 streamlit run streamlit_app.py
